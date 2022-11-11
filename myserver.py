@@ -34,7 +34,7 @@ def server_operation(connection=None, buffer_size=2048):
 class Server:
     """Creates the server and provides functions to run it."""
 
-    def __init__(self, address, port, buffer_size, max_listen=5):
+    def __init__(self, address, port, buffer_size, max_listen=10000):
         """Init the server properties."""
         self.address = address
         self.port = port
