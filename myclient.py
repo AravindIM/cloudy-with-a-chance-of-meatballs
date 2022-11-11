@@ -3,6 +3,11 @@
 import socket
 
 
+SERVER_IP = "192.168.122.2"
+SERVER_PORT = 8008
+BUFFER_SIZE = 2048
+
+
 class Client:
     """Create the client and functions to connect with server."""
 
@@ -30,7 +35,7 @@ def main():
     """Run the code."""
     try:
         busy_time = input("Num of seconds:")
-        client = Client("192.168.122.2", 8008)
+        client = Client(SERVER_IP, SERVER_PORT, BUFFER_SIZE)
         client.connect()
         print("Connecting to server [OK]")
         client.request(busy_time)
