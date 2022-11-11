@@ -44,12 +44,12 @@ class Server:
 
     def start(self, handle_connected):
         """Bind to the port and start listening."""
-        self._socket.bind(self.address, self.port)
+        self._socket.bind((self.address, self.port))
         self._socket.listen(self.max_listen)
         while True:
             conn, cl_addr = self._socket.accept()
-            currConnThread = Thread(target=self.handle_connected,
-                                    args=(conn, cl_addr, self.buffer_size))
+            currConnThread = Thread(target=handle_connected,
+                                    args=(conn, self.buffer_size))
             currConnThread.start()
 
 
