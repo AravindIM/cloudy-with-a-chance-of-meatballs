@@ -1,7 +1,8 @@
 """Run the client."""
 
 import socket
-
+import sys
+from threading import Thread
 
 class Client:
     """Create the client and functions to connect with server."""
@@ -25,21 +26,31 @@ class Client:
         """Recieve response from the server."""
         return self._socket.recv(self.buffer_size).decode()
 
+def handle_connected(client,busy_time):
+    """ Send request and recieve reesponse from Server """
+    while True:
+        try:
+            print("Connecting to server [OK]")
+            client.request(busy_time)
+            print("Sending message to server [OK]")
+            response = client.response()
+            print("Recieved response from server [OK]")
+            print(f"Response: {response}")
+        except Exception as e:
+            print(f"ERROR: {e}")
 
 def main():
     """Run the code."""
-    try:
-        busy_time = input("Num of seconds:")
+    try :
+        thread_count = sys.argv[1]
+        busy_time = sys.argv[2]
+    except Exception as error :
+        print(f"Error parsing command line arguments : {error}")
+    for i in range(thread_count) :
         client = Client("192.168.122.2", 8008)
         client.connect()
-        print("Connecting to server [OK]")
-        client.request(busy_time)
-        print("Sending message to server [OK]")
-        response = client.response()
-        print("Recieved response from server [OK]")
-        print(f"Response: {response}")
-    except Exception as e:
-        print(f"ERROR: {e}")
+        Thread(target=handle_connected, args=(client,busy_time))
+
 
 
 if __name__ == "__main__":
