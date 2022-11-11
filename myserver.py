@@ -5,6 +5,11 @@ import time
 from threading import Thread
 
 
+SOCKET_IP = "0.0.0.0"
+SOCKET_PORT = 8008
+BUFFER_SIZE = 2048
+
+
 def fib(n):
     """Calculate fibonacci of n."""
     a = 0
@@ -55,7 +60,7 @@ class Server:
 
 def main():
     """Run the code."""
-    server = Server("0.0.0.0", 8008, 2048)
+    server = Server(SOCKET_IP, SOCKET_PORT, BUFFER_SIZE)
     server.start(server_operation)
 
 

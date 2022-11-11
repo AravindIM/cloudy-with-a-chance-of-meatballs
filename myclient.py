@@ -4,6 +4,11 @@ import socket
 import sys
 from threading import Thread
 
+SERVER_IP = "192.168.122.2"
+SERVER_PORT = 8008
+BUFFER_SIZE = 2048
+
+
 class Client:
     """Create the client and functions to connect with server."""
 
@@ -45,7 +50,7 @@ def main():
     except Exception as error :
         print(f"Error parsing command line arguments : {error}")
     while True :
-        client = Client("192.168.122.2", 8008)
+        client = Client(SERVER_IP, SERVER_PORT, BUFFER_SIZE)
         client.connect()
         Thread(target=handle_connected, args=(client,busy_time))
 
