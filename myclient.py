@@ -7,6 +7,11 @@ import sys
 from threading import Thread
 
 
+SERVER_IP = "192.168.122.2"
+SERVER_PORT = 8008
+BUFFER_SIZE = 2048
+
+
 class Client:
     """Create the client and functions to connect with server."""
 
@@ -34,7 +39,7 @@ def handle_connected(thread_num, busy_time):
     """Send request and recieve response from server."""
     while True:
         try:
-            client = Client("192.168.122.2", 8008)
+            client = Client(SERVER_IP, SERVER_PORT, BUFFER_SIZE)
             client.connect()
             print(f"[Thread{thread_num}]: Connecting to server [OK]")
             client.request(busy_time)
