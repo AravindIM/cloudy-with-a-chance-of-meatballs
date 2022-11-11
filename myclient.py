@@ -51,11 +51,11 @@ def main():
     try:
         thread_count = int(sys.argv[1])
         busy_time = int(sys.argv[2])
+        for i in range(thread_count):
+            clientThread = Thread(target=handle_connected, args=(i+1, busy_time))
+            clientThread.start()
     except Exception as error:
         print(f"Error parsing command line arguments : {error}")
-    for i in range(thread_count):
-        clientThread = Thread(target=handle_connected, args=(i+1, busy_time))
-        clientThread.start()
 
 
 if __name__ == "__main__":
