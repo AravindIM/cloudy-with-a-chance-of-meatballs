@@ -28,18 +28,18 @@ class Client:
         return self._socket.recv(self.buffer_size).decode()
 
 
-def handle_connected(busy_time):
+def handle_connected(thread_num, busy_time):
     """Send request and recieve response from server."""
     while True:
         try:
             client = Client("192.168.122.2", 8008)
             client.connect()
-            print("Connecting to server [OK]")
+            print(f"[Thread{thread_num}]: Connecting to server [OK]")
             client.request(busy_time)
-            print("Sending message to server [OK]")
+            print(f"[Thread{thread_num}]: Sending message to server [OK]")
             response = client.response()
-            print("Recieved response from server [OK]")
-            print(f"Response: {response}")
+            print(f"[Thread{thread_num}]: Recieved response from server [OK]")
+            print(f"[Thread{thread_num}]: Response: {response}")
         except Exception as e:
             print(f"ERROR: {e}")
 
@@ -52,7 +52,7 @@ def main():
     except Exception as error:
         print(f"Error parsing command line arguments : {error}")
     for i in range(thread_count):
-        clientThread = Thread(target=handle_connected, args=(busy_time,))
+        clientThread = Thread(target=handle_connected, args=(i+1, busy_time))
         clientThread.start()
 
 
