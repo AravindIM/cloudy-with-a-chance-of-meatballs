@@ -55,7 +55,7 @@ class Server:
         self._socket.bind((self.address, self.port))
         self._socket.listen(self.max_listen)
         while True:
-            conn, cl_addr = self._socket.accept()
+            conn, _ = self._socket.accept()
             currConnThread = Thread(target=handle_connected,
                                     args=(conn, self.buffer_size))
             currConnThread.start()
