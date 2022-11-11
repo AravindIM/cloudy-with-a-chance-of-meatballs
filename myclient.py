@@ -44,12 +44,12 @@ def handle_connected(thread_num, busy_time):
         try:
             client = Client(random.choice(ips), SERVER_PORT, BUFFER_SIZE)
             client.connect()
-            print(f"[Thread{thread_num}]: Connecting to server [OK]")
+            print(f"[Thread{thread_num}]: Connecting to server {client.host} [OK]")
             client.request(busy_time)
-            print(f"[Thread{thread_num}]: Sending message to server [OK]")
+            print(f"[Thread{thread_num}]: Sending message to server {client.host} [OK]")
             response = client.response()
-            print(f"[Thread{thread_num}]: Recieved response from server [OK]")
-            print(f"[Thread{thread_num}]: Response: {response}")
+            print(f"[Thread{thread_num}]: Recieved response from server {client.host} [OK]")
+            print(f"[Thread{thread_num}]: Response from {client.host}: {response}")
         except Exception as e:
             print(f"ERROR: {e}")
 
