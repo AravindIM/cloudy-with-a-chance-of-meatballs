@@ -1,0 +1,11 @@
+[Unit]
+Description="My Custom Server Service"
+
+[Service]
+User=root
+WorkingDirectory=/home/user
+ExecStart=/usr/bin/python3 myserver.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
