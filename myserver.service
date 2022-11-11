@@ -1,11 +1,15 @@
 [Unit]
 Description="My Custom Server Service"
+After=systemd-user-sessions.service plymouth-quit-wait.service
+After=rc-local.service
+Before=getty.target
 
 [Service]
-User=root
+Type=oneshot
 WorkingDirectory=/home/user
 ExecStart=/usr/bin/python3 myserver.py
-Restart=always
+RemainAfterExit=yes
+
 
 [Install]
 WantedBy=multi-user.target
