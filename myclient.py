@@ -5,12 +5,14 @@
 import socket
 import sys
 from threading import Thread
+import random
 
 
 SERVER_IP = "192.168.122.2"
 SERVER_PORT = 8008
 BUFFER_SIZE = 2048
 
+ips = [SERVER_IP]
 
 class Client:
     """Create the client and functions to connect with server."""
@@ -37,9 +39,10 @@ class Client:
 
 def handle_connected(thread_num, busy_time):
     """Send request and recieve response from server."""
+    global ips
     while True:
         try:
-            client = Client(SERVER_IP, SERVER_PORT, BUFFER_SIZE)
+            client = Client(random.choice(ips), SERVER_PORT, BUFFER_SIZE)
             client.connect()
             print(f"[Thread{thread_num}]: Connecting to server [OK]")
             client.request(busy_time)
