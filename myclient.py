@@ -53,12 +53,22 @@ def handle_connected(thread_num, busy_time):
         except Exception as e:
             print(f"ERROR: {e}")
 
+def handle_autoscaler_connection():
+    global ips
+    autoscaler_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    autoscaler_socket.bind(("127.0.0.1",6009))
+    autoscaler_socket.listen(10)
+    conn, _ = autoscaler_socket.accept()
+    new_ip = conn.recv(BUFFER_SIZE).decode()
+    ips.append(new_ip)
 
 def main():
     """Run the code."""
     try:
         thread_count = int(sys.argv[1])
         busy_time = int(sys.argv[2])
+        autoscalerThread = Thread(target=handle_autoscaler_connection)
+        autoscalerThread.start()
         for i in range(thread_count):
             clientThread = Thread(target=handle_connected, args=(i+1, busy_time))
             clientThread.start()
